@@ -25,8 +25,6 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-//ignore C4996
-#pragma warning(disable:4996)
 #ifndef FMT_FORMAT_H_
 #define FMT_FORMAT_H_
 
