@@ -290,3 +290,7 @@ __pycache__/
 /out/build/x64-Debug
 /AsaApi/vcpkg_installed
 /out_lib
+
+#do not ignore lib
+!lib/Debug
+!lib/Release
