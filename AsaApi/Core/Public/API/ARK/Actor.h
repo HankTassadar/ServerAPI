@@ -40,6 +40,22 @@ struct FPrimalChatMessage {
 
 struct FPrimalPlayerCharacterConfigStructReplicated
 {
+    unsigned __int8 bIsFemale : 1;
+    FLinearColor BodyColors[4];
+    FString PlayerCharacterName;
+    unsigned __int8 FacialHairIndex;
+    unsigned __int8 HeadHairIndex;
+    unsigned __int8 EyebrowIndex;
+    float PercentOfFullHeadHairGrowth;
+    float PercentOfFullFacialHairGrowth;
+    float RawBoneModifiers[26];
+    int PlayerSpawnRegionIndex;
+    unsigned __int8 OverrideHeadHairColor[2];
+    unsigned __int8 OverrideFacialHairColor[2];
+    unsigned __int8 DynamicMaterialBytes[50];
+    int PlayerVoiceCollectionIndex;
+    unsigned __int8 bUsingCustomPlayerVoiceCollection : 1;
+
     // Fields
 
     FieldArray<FLinearColor, 4> BodyColorsField() { return { this, "FPrimalPlayerCharacterConfigStructReplicated.BodyColors" }; }
@@ -56,8 +72,8 @@ struct FPrimalPlayerCharacterConfigStructReplicated
 
     // Bitfields
 
-    BitFieldValue<bool, unsigned __int32> bIsFemale() { return { this, "FPrimalPlayerCharacterConfigStructReplicated.bIsFemale" }; }
-    BitFieldValue<bool, unsigned __int32> bUsingCustomPlayerVoiceCollection() { return { this, "FPrimalPlayerCharacterConfigStructReplicated.bUsingCustomPlayerVoiceCollection" }; }
+    BitFieldValue<bool, unsigned __int32> bIsFemaleField() { return { this, "FPrimalPlayerCharacterConfigStructReplicated.bIsFemale" }; }
+    BitFieldValue<bool, unsigned __int32> bUsingCustomPlayerVoiceCollectionField() { return { this, "FPrimalPlayerCharacterConfigStructReplicated.bUsingCustomPlayerVoiceCollection" }; }
 
     // Functions
 
@@ -70,6 +86,30 @@ struct FPrimalPlayerCharacterConfigStructReplicated
     FPrimalPlayerCharacterConfigStruct* GetPlayerCharacterConfig(FPrimalPlayerCharacterConfigStruct* result) { return NativeCall<FPrimalPlayerCharacterConfigStruct*, FPrimalPlayerCharacterConfigStruct*>(this, "FPrimalPlayerCharacterConfigStructReplicated.GetPlayerCharacterConfig()", result); }
     //void FPrimalPlayerCharacterConfigStructReplicated(const FPrimalPlayerCharacterConfigStruct* fromConfig) { NativeCall<void, const FPrimalPlayerCharacterConfigStruct*>(this, "FPrimalPlayerCharacterConfigStructReplicated.FPrimalPlayerCharacterConfigStructReplicated(FPrimalPlayerCharacterConfigStruct&)", fromConfig); }
 };
+
+struct UDamageType : UObject
+{
+    // Fields
+
+    float& DamageImpulseField() { return *GetNativePointerField<float*>(this, "UDamageType.DamageImpulse"); }
+    float& DestructibleImpulseField() { return *GetNativePointerField<float*>(this, "UDamageType.DestructibleImpulse"); }
+    float& DestructibleDamageSpreadScaleField() { return *GetNativePointerField<float*>(this, "UDamageType.DestructibleDamageSpreadScale"); }
+    float& DamageFalloffField() { return *GetNativePointerField<float*>(this, "UDamageType.DamageFalloff"); }
+
+    // Bitfields
+
+    BitFieldValue<bool, unsigned __int32> bIsPassiveDamage() { return { this, "UDamageType.bIsPassiveDamage" }; }
+    BitFieldValue<bool, unsigned __int32> bCausedByWorld() { return { this, "UDamageType.bCausedByWorld" }; }
+    BitFieldValue<bool, unsigned __int32> bScaleMomentumByMass() { return { this, "UDamageType.bScaleMomentumByMass" }; }
+    BitFieldValue<bool, unsigned __int32> bRadialDamageVelChange() { return { this, "UDamageType.bRadialDamageVelChange" }; }
+
+    // Functions
+
+    static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UDamageType.StaticClass()"); }
+    //void UDamageType(const FObjectInitializer* ObjectInitializer) { NativeCall<void, const FObjectInitializer*>(this, "UDamageType.UDamageType(FObjectInitializer&)", ObjectInitializer); }
+};
+
+
 
 struct UPrimalActor : UObject
 {
@@ -3121,6 +3161,7 @@ struct AShooterPlayerController : ABasePlayerController
 
     //void ClientPlayForceFeedback(UForceFeedbackEffect* ForceFeedbackEffect, FForceFeedbackParameters* Params, float intensityMult) { NativeCall<void, UForceFeedbackEffect*, FForceFeedbackParameters*, float>(this, "AShooterPlayerController.ClientPlayForceFeedback(UForceFeedbackEffect*,FForceFeedbackParameters,float)", ForceFeedbackEffect, Params, intensityMult); }
     static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "AShooterPlayerController.GetPrivateStaticClass()"); }
+    static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "AShooterPlayerController.StaticClass()"); }
     bool AllowedToSpectateAllTeams() { return NativeCall<bool>(this, "AShooterPlayerController.AllowedToSpectateAllTeams()"); }
     void BPGetExtraWaypointsSOTF(APlayerController* Controller, AShooterCharacter* PlayerPawn, const TArray<FPointOfInterestData_ForCompanion, TSizedDefaultAllocator<32> >* IndicatorsIn, TArray<FPointOfInterestData_ForCompanion, TSizedDefaultAllocator<32> >* IndicatorsOut) { NativeCall<void, APlayerController*, AShooterCharacter*, const TArray<FPointOfInterestData_ForCompanion, TSizedDefaultAllocator<32> >*, TArray<FPointOfInterestData_ForCompanion, TSizedDefaultAllocator<32> >*>(this, "AShooterPlayerController.BPGetExtraWaypointsSOTF(APlayerController*,AShooterCharacter*,TArray<FPointOfInterestData_ForCompanion,TSizedDefaultAllocator<32>>&,TArray<FPointOfInterestData_ForCompanion,TSizedDefaultAllocator<32>>&)", Controller, PlayerPawn, IndicatorsIn, IndicatorsOut); }
     bool BPPreventChangeCamera() { return NativeCall<bool>(this, "AShooterPlayerController.BPPreventChangeCamera()"); }
@@ -7342,6 +7383,7 @@ struct APrimalDinoCharacter : APrimalCharacter
     bool AllowPushOthers() { return NativeCall<bool>(this, "APrimalDinoCharacter.AllowPushOthers()"); }
     bool FlyingUseHighQualityCollision() { return NativeCall<bool>(this, "APrimalDinoCharacter.FlyingUseHighQualityCollision()"); }
     static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalDinoCharacter.GetPrivateStaticClass()"); }
+    static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "APrimalDinoCharacter.StaticClass()"); }
     bool AllowWakingTame(APlayerController* ForPC) { return NativeCall<bool, APlayerController*>(this, "APrimalDinoCharacter.AllowWakingTame(APlayerController*)", ForPC); }
     float BlueprintAdjustOutputDamage(int AttackIndex, float OriginalDamageAmount, AActor* HitActor, TSubclassOf<UDamageType>* OutDamageType, float* OutDamageImpulse) { return NativeCall<float, int, float, AActor*, TSubclassOf<UDamageType>*, float*>(this, "APrimalDinoCharacter.BlueprintAdjustOutputDamage(int,float,AActor*,TSubclassOf<UDamageType>&,float&)", AttackIndex, OriginalDamageAmount, HitActor, OutDamageType, OutDamageImpulse); }
     float BlueprintExtraBabyScaling() { return NativeCall<float>(this, "APrimalDinoCharacter.BlueprintExtraBabyScaling()"); }
@@ -8903,7 +8945,7 @@ struct FActorSpawnParameters
     unsigned int ExtraSpawnData;
 
     FActorSpawnParameters()
-        : Name()
+        : Name(FName())
         , Template(nullptr)
         , Owner(nullptr)
         , Instigator(nullptr)
@@ -8912,9 +8954,10 @@ struct FActorSpawnParameters
         , NameMode(ESpawnActorNameMode::Required_Fatal)
         , CustomPreSpawnInitalization(nullptr)
         , AttachToComponent(nullptr)
-        , AttachToBoneName(FName(""))
+        , AttachToBoneName(FName())
         , bPrimalDeferConstruction(false)
         , SpawnCollisionHandlingOverride{0}
+        , TransformScaleMethod(ESpawnActorScaleMethod::MultiplyWithRoot)
         , ObjectFlags(EObjectFlags::RF_Transactional)
     {
     }
